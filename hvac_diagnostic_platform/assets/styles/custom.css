@@ -3,17 +3,29 @@
   --bg-panel: rgba(18, 30, 49, 0.88);
   --bg-panel-2: rgba(14, 24, 40, 0.92);
   --border-soft: rgba(120, 160, 220, 0.18);
+  --border-strong: rgba(120, 180, 255, 0.28);
   --text-main: #f3f7ff;
   --text-soft: #b9c7dd;
+  --text-muted: #90a4bf;
   --accent: #4db6ff;
   --accent-2: #7de3ff;
   --success: #33d17a;
   --warning: #f6c344;
   --danger: #ff5d73;
   --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.28);
+  --shadow-strong: 0 14px 32px rgba(0, 0, 0, 0.36);
   --radius-xl: 22px;
   --radius-lg: 18px;
   --radius-md: 14px;
+  --radius-sm: 10px;
+}
+
+html, body, [class*="css"] {
+  font-family: "Inter", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+}
+
+* {
+  transition: all 0.2s ease-in-out;
 }
 
 /* Main app background */
@@ -22,7 +34,7 @@
   color: var(--text-main);
 }
 
-/* Main content width feel */
+/* Main content spacing */
 .block-container {
   padding-top: 1.2rem;
   padding-bottom: 2rem;
@@ -39,7 +51,19 @@ section[data-testid="stSidebar"] .block-container {
   padding-top: 1rem;
 }
 
-/* Headers */
+/* Sidebar logo */
+.sidebar-logo {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.sidebar-logo img {
+  width: 120px;
+  opacity: 0.96;
+  filter: drop-shadow(0 0 10px rgba(77, 182, 255, 0.2));
+}
+
+/* Typography */
 h1, h2, h3, h4, h5, h6 {
   color: var(--text-main);
   letter-spacing: 0.2px;
@@ -49,7 +73,11 @@ p, li, label, div, span {
   color: var(--text-soft);
 }
 
-/* Hero card */
+small, .caption {
+  color: var(--text-muted);
+}
+
+/* Hero basic card */
 .hero-card {
   background:
     linear-gradient(135deg, rgba(77, 182, 255, 0.12), rgba(125, 227, 255, 0.04)),
@@ -74,6 +102,50 @@ p, li, label, div, span {
   line-height: 1.6;
 }
 
+/* Hero with image */
+.hero-image {
+  position: relative;
+  border-radius: 22px;
+  overflow: hidden;
+  margin-bottom: 1.25rem;
+  border: 1px solid var(--border-soft);
+  box-shadow: var(--shadow-strong);
+}
+
+.hero-image img {
+  width: 100%;
+  height: 260px;
+  object-fit: cover;
+  filter: brightness(0.55);
+  display: block;
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  padding: 1.35rem 1.35rem;
+  background: linear-gradient(
+    to right,
+    rgba(10, 20, 40, 0.88),
+    rgba(10, 20, 40, 0.48),
+    rgba(10, 20, 40, 0.12)
+  );
+}
+
+.hero-overlay h2 {
+  color: #ffffff;
+  font-size: 2rem;
+  margin-bottom: 0.3rem;
+  font-weight: 700;
+}
+
+.hero-overlay p {
+  color: #dce7ff;
+  max-width: 780px;
+  line-height: 1.6;
+  font-size: 1rem;
+}
+
 /* Panel / section card */
 .panel-card {
   background: var(--bg-panel);
@@ -93,7 +165,7 @@ p, li, label, div, span {
 
 /* KPI custom cards */
 .kpi-card {
-  background: linear-gradient(180deg, rgba(22, 36, 58, 0.96), rgba(14, 25, 41, 0.96));
+  background: linear-gradient(145deg, rgba(22, 36, 58, 0.96), rgba(14, 25, 41, 0.96));
   border: 1px solid var(--border-soft);
   border-radius: var(--radius-lg);
   padding: 1rem 1rem;
@@ -120,34 +192,36 @@ p, li, label, div, span {
   margin-top: 0.45rem;
 }
 
-/* Streamlit metric polish */
+/* Streamlit metric cards */
 [data-testid="stMetric"] {
-  background: linear-gradient(180deg, rgba(22, 36, 58, 0.96), rgba(14, 25, 41, 0.96));
+  background: linear-gradient(145deg, rgba(22, 36, 58, 0.96), rgba(14, 25, 41, 0.96));
   border: 1px solid var(--border-soft);
   border-radius: var(--radius-lg);
-  padding: 0.85rem 0.9rem;
+  padding: 0.9rem 0.95rem;
   box-shadow: var(--shadow-soft);
+  min-height: 110px;
 }
 
 [data-testid="stMetricLabel"] {
   color: var(--text-soft);
+  font-weight: 500;
 }
 
 [data-testid="stMetricValue"] {
   color: var(--text-main);
+  font-weight: 700;
 }
 
 /* Buttons */
 .stButton > button,
 .stDownloadButton > button {
   background: linear-gradient(135deg, #1c7ed6, #1098ad);
-  color: white;
-  border: none;
-  border-radius: 12px;
-  padding: 0.7rem 1rem;
-  font-weight: 600;
+  color: white !important;
+  border: none !important;
+  border-radius: 12px !important;
+  padding: 0.72rem 1rem !important;
+  font-weight: 600 !important;
   box-shadow: 0 8px 20px rgba(16, 152, 173, 0.22);
-  transition: all 0.18s ease;
 }
 
 .stButton > button:hover,
@@ -164,6 +238,20 @@ textarea {
   border-radius: 12px !important;
   border: 1px solid var(--border-soft) !important;
   color: var(--text-main) !important;
+}
+
+input, textarea {
+  color: var(--text-main) !important;
+}
+
+/* Radio / checkbox / select text */
+.stRadio label,
+.stSelectbox label,
+.stTextInput label,
+.stNumberInput label,
+.stTextArea label {
+  color: var(--text-main) !important;
+  font-weight: 600;
 }
 
 /* Dataframes / tables */
@@ -184,7 +272,7 @@ button[role="tab"] {
   border-radius: 10px !important;
 }
 
-/* Divider spacing */
+/* Divider */
 hr {
   border-color: rgba(120, 160, 220, 0.14);
 }
@@ -228,71 +316,85 @@ hr {
   box-shadow: var(--shadow-soft);
   margin-bottom: 1rem;
 }
-/* Sidebar logo */
-.sidebar-logo {
-  text-align: center;
-  margin-bottom: 1rem;
-}
-
-.sidebar-logo img {
-  width: 120px;
-  opacity: 0.95;
-}
-
-/* Hero with image */
-.hero-image {
-  position: relative;
-  border-radius: 22px;
-  overflow: hidden;
-  margin-bottom: 1.2rem;
-}
-
-.hero-image img {
-  width: 100%;
-  height: 240px;
-  object-fit: cover;
-  filter: brightness(0.55);
-}
-
-.hero-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  padding: 1.2rem;
-}
-
-.hero-overlay h2 {
-  color: white;
-  margin-bottom: 0.3rem;
-}
-
-.hero-overlay p {
-  color: #dce7ff;
-  max-width: 600px;
-}
 
 /* Icon cards */
 .icon-card {
-  background: rgba(18, 30, 49, 0.9);
-  border: 1px solid rgba(120,160,220,0.2);
-  border-radius: 16px;
-  padding: 1rem;
+  background: linear-gradient(145deg, rgba(20, 35, 60, 0.95), rgba(10, 20, 40, 0.95));
+  border: 1px solid rgba(120, 160, 220, 0.25);
+  border-radius: 18px;
+  padding: 1.4rem;
   text-align: center;
-  transition: 0.2s;
+  transition: all 0.25s ease;
+  box-shadow: 0 0 18px rgba(0, 0, 0, 0.3);
+  min-height: 145px;
 }
 
 .icon-card:hover {
-  transform: translateY(-3px);
+  transform: translateY(-6px) scale(1.03);
+  box-shadow: 0 0 25px rgba(80, 160, 255, 0.4);
+  border-color: var(--border-strong);
 }
 
 .icon-card img {
-  width: 50px;
-  margin-bottom: 0.5rem;
+  width: 70px;
+  margin-bottom: 0.6rem;
+  filter: drop-shadow(0 0 6px rgba(120, 180, 255, 0.6));
+}
+
+.icon-card div {
+  color: var(--text-main);
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+/* Equipment preview image */
+.equipment-preview {
+  width: 100%;
+  border-radius: 14px;
+  border: 1px solid var(--border-soft);
+  box-shadow: var(--shadow-soft);
 }
 
 /* Empty state */
 .empty-box {
   text-align: center;
   padding: 2rem;
-  opacity: 0.7;
+  opacity: 0.78;
+  background: var(--bg-panel-2);
+  border: 1px dashed var(--border-soft);
+  border-radius: var(--radius-lg);
+}
+
+/* Hide streamlit menu/footer if desired */
+#MainMenu {
+  visibility: hidden;
+}
+footer {
+  visibility: hidden;
+}
+header[data-testid="stHeader"] {
+  background: transparent;
+}
+
+/* Make markdown code areas look cleaner */
+code {
+  color: #d7ecff;
+  background: rgba(120, 160, 220, 0.08);
+  padding: 0.1rem 0.35rem;
+  border-radius: 6px;
+}
+
+/* Better captions under sections */
+[data-testid="stCaptionContainer"] {
+  color: var(--text-muted);
+}
+
+/* Sidebar radio labels */
+section[data-testid="stSidebar"] .stRadio label {
+  color: var(--text-soft) !important;
+}
+
+/* Better select visibility */
+section[data-testid="stSidebar"] .stSelectbox label {
+  color: var(--text-main) !important;
 }
