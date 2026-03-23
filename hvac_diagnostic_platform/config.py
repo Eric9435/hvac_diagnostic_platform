@@ -6,8 +6,8 @@ APP_SUBTITLE = "HVAC Performance, Energy & Diagnostic Intelligence Platform"
 BASE_DIR = Path(__file__).resolve().parent
 DATABASE_PATH = BASE_DIR / "database" / "hvac.db"
 
-DEFAULT_CURRENCY = "USD"
-DEFAULT_TARIFF = 0.12
+DEFAULT_CURRENCY = "MMK"
+DEFAULT_TARIFF = 900.0
 DEFAULT_DESIGN_COP = 5.0
 
 COMFORT_TOLERANCE = 1.0

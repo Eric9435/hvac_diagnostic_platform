@@ -26,7 +26,7 @@ def render_basic_form() -> dict | None:
             cwr = st.number_input("CW Return Temp (°C)", value=35.0)
             chiller_power_kw = st.number_input("Chiller Power (kW)", value=120.0)
             operating_hours = st.number_input("Operating Hours", value=10.0)
-            tariff = st.number_input("Tariff (USD/kWh)", value=float(DEFAULT_TARIFF))
+            tariff = st.number_input("Tariff (MMK/kWh)", value=float(DEFAULT_TARIFF))
 
         notes = st.text_area("Observation / Notes", "Room not reaching setpoint.")
 
