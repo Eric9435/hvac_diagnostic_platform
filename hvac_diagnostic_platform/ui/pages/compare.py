@@ -2,10 +2,17 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 from storage.repositories.analysis_repository import fetch_all_analyses
+from ui.components.header import render_hero
+from core.services.export_service import td
 
 
 def render_compare_page() -> None:
-    st.title("Compare Analyses")
+    lang = st.session_state.get("lang", "dual")
+
+    render_hero(
+        td("compare", lang),
+        "Compare saved HVAC diagnostic records to evaluate efficiency improvement, energy waste reduction, and scoring changes.",
+    )
 
     rows = fetch_all_analyses()
     if len(rows) < 2:
@@ -59,3 +66,4 @@ def render_compare_page() -> None:
     plot_df = compare_df.melt(id_vars="Metric", var_name="Record", value_name="Value")
     fig = px.bar(plot_df, x="Metric", y="Value", color="Record", barmode="group", title="Comparison Overview")
     st.plotly_chart(fig, use_container_width=True)
+

@@ -12,12 +12,20 @@ from ui.pages.reports import render_reports_page
 from ui.pages.settings import render_settings_page
 from ui.pages.admin import render_admin_page
 from core.services.export_service import td
+from ui.components.header import load_custom_css, render_sidebar_logo
 
 
-st.set_page_config(page_title=APP_TITLE, layout="wide")
+st.set_page_config(
+    page_title=APP_TITLE,
+    layout="wide",
+    initial_sidebar_state="expanded",
+)
 
 SCHEMA_PATH = Path(__file__).resolve().parent / "database" / "schema.sql"
 initialize_database(SCHEMA_PATH)
+
+load_custom_css()
+render_sidebar_logo()
 
 if "lang" not in st.session_state:
     st.session_state["lang"] = "dual"
@@ -34,7 +42,9 @@ lang = st.sidebar.selectbox(
 
 st.session_state["lang"] = lang
 
-st.sidebar.title(td("app_title", lang))
+st.sidebar.markdown("### HVAC Diagnostic")
+st.sidebar.caption("Smart Energy Intelligence")
+
 page = st.sidebar.radio(
     "Navigation",
     [

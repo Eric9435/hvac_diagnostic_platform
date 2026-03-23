@@ -2,12 +2,16 @@ import streamlit as st
 import pandas as pd
 from storage.repositories.analysis_repository import fetch_all_analyses, fetch_analysis_by_id
 from core.services.export_service import td
+from ui.components.header import render_hero
 
 
 def render_history_page() -> None:
     lang = st.session_state.get("lang", "dual")
 
-    st.title(td("history", lang))
+    render_hero(
+        td("history", lang),
+        "Review previously saved HVAC analyses, inspect engineering details, and track diagnostic outcomes over time.",
+    )
 
     rows = fetch_all_analyses()
     if not rows:

@@ -12,10 +12,12 @@ from ui.charts.cop_chart import render_cop_chart
 from ui.charts.cost_chart import render_cost_chart
 from ui.charts.waste_chart import render_waste_chart
 from ui.charts.trend_chart import render_score_trend_chart
+from core.services.export_service import td
+from ui.components.header import render_hero
 
 
 def render_results_dashboard_page() -> None:
-    st.title("Results Dashboard")
+    lang = st.session_state.get("lang", "dual")
 
     inputs = st.session_state.get("latest_inputs")
     result = st.session_state.get("latest_result")
@@ -24,27 +26,59 @@ def render_results_dashboard_page() -> None:
         st.info("No analysis result available yet. Please run a new analysis first.")
         return
 
+    render_hero(
+        td("results_dashboard", lang),
+        "Premium engineering dashboard for efficiency, diagnostics, scoring, and cost-loss analysis.",
+    )
+
     render_kpi_cards(result)
     render_health_score_cards(result)
 
     left, right = st.columns([1, 1])
 
     with left:
+        st.markdown('<div class="panel-card">', unsafe_allow_html=True)
         render_alerts_panel(result)
         render_diagnosis_panel(result)
 
-        st.subheader("Root Causes")
+        st.subheader(td("root_causes", lang))
         for item in result.get("root_causes", []):
             st.write(f"- {item}")
+        st.markdown("</div>", unsafe_allow_html=True)
 
     with right:
+        st.markdown('<div class="panel-card">', unsafe_allow_html=True)
         render_recommendation_panel(result)
         render_data_quality_panel(result, inputs["analysis_mode"])
+        st.markdown("</div>", unsafe_allow_html=True)
 
+    st.markdown('<div class="chart-card">', unsafe_allow_html=True)
     render_temperature_chart(inputs)
+    st.markdown("</div>", unsafe_allow_html=True)
+
+    st.markdown('<div class="chart-card">', unsafe_allow_html=True)
     render_power_chart(inputs, result)
-    render_cop_chart(inputs)
-    render_cost_chart(result)
-    render_waste_chart(result)
-    render_score_trend_chart(result)
+    st.markdown("</div>", unsafe_allow_html=True)
+
+    c1, c2 = st.columns(2)
+    with c1:
+        st.markdown('<div class="chart-card">', unsafe_allow_html=True)
+        render_cop_chart(inputs)
+        st.markdown("</div>", unsafe_allow_html=True)
+
+    with c2:
+        st.markdown('<div class="chart-card">', unsafe_allow_html=True)
+        render_score_trend_chart(result)
+        st.markdown("</div>", unsafe_allow_html=True)
+
+    c3, c4 = st.columns(2)
+    with c3:
+        st.markdown('<div class="chart-card">', unsafe_allow_html=True)
+        render_cost_chart(result)
+        st.markdown("</div>", unsafe_allow_html=True)
+
+    with c4:
+        st.markdown('<div class="chart-card">', unsafe_allow_html=True)
+        render_waste_chart(result)
+        st.markdown("</div>", unsafe_allow_html=True)
 
