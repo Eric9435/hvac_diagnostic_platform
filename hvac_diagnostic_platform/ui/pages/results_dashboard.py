@@ -4,11 +4,14 @@ from ui.components.alerts_panel import render_alerts_panel
 from ui.components.diagnosis_panel import render_diagnosis_panel
 from ui.components.recommendation_panel import render_recommendation_panel
 from ui.components.data_quality_panel import render_data_quality_panel
+from ui.components.health_score_cards import render_health_score_cards
+
 from ui.charts.temperature_chart import render_temperature_chart
 from ui.charts.power_chart import render_power_chart
 from ui.charts.cop_chart import render_cop_chart
 from ui.charts.cost_chart import render_cost_chart
 from ui.charts.waste_chart import render_waste_chart
+from ui.charts.trend_chart import render_score_trend_chart
 
 
 def render_results_dashboard_page() -> None:
@@ -22,12 +25,19 @@ def render_results_dashboard_page() -> None:
         return
 
     render_kpi_cards(result)
+    render_health_score_cards(result)
 
-    c1, c2 = st.columns(2)
-    with c1:
+    left, right = st.columns([1, 1])
+
+    with left:
         render_alerts_panel(result)
         render_diagnosis_panel(result)
-    with c2:
+
+        st.subheader("Root Causes")
+        for item in result.get("root_causes", []):
+            st.write(f"- {item}")
+
+    with right:
         render_recommendation_panel(result)
         render_data_quality_panel(result, inputs["analysis_mode"])
 
@@ -36,3 +46,5 @@ def render_results_dashboard_page() -> None:
     render_cop_chart(inputs)
     render_cost_chart(result)
     render_waste_chart(result)
+    render_score_trend_chart(result)
+

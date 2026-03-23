@@ -1,6 +1,3 @@
-# Step 38 — `tests/test_efficiency.py`
-
-```python
 from core.calculations.efficiency import calculate_efficiency_metrics
 
 
@@ -14,3 +11,4 @@ def test_efficiency_metrics():
     )
     assert result["wasted_energy_kwh"] >= 0
     assert result["wasted_cost"] >= 0
+

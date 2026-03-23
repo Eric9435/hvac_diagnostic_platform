@@ -1,3 +1,5 @@
+import pandas as pd
+import plotly.express as px
 import streamlit as st
 
 
@@ -16,3 +18,5 @@ def render_power_chart(inputs: dict, result: dict) -> None:
     )
     fig = px.bar(df, x="Component", y="Power (kW)", title="Power Distribution")
     st.plotly_chart(fig, use_container_width=True)
+
+

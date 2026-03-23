@@ -84,12 +84,28 @@ def fetch_all_analyses() -> list[dict]:
     conn = get_connection()
     rows = conn.execute(
         """
-        SELECT id, site_name, equipment_name, ac_type, analysis_mode,
-               analysis_date, analysis_time, operator_name,
-               wasted_energy_kwh, wasted_cost, overall_score, confidence_score
+        SELECT id,
+               site_name,
+               building_name,
+               equipment_name,
+               equipment_tag,
+               ac_type,
+               analysis_mode,
+               operator_name,
+               analysis_date,
+               analysis_time,
+               analysis_month,
+               analysis_year,
+               wasted_energy_kwh,
+               wasted_cost,
+               monthly_loss,
+               annual_loss,
+               overall_score,
+               confidence_score
         FROM analyses
         ORDER BY id DESC
         """
     ).fetchall()
     conn.close()
     return [dict(row) for row in rows]
+
