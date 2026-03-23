@@ -398,3 +398,27 @@ section[data-testid="stSidebar"] .stRadio label {
 section[data-testid="stSidebar"] .stSelectbox label {
   color: var(--text-main) !important;
 }
+/* ===== CLEAN NO-LINE FINAL OVERRIDE ===== */
+hr {
+  display: none !important;
+}
+
+section[data-testid="stSidebar"] {
+  border-right: none !important;
+  box-shadow: 6px 0 24px rgba(0, 0, 0, 0.18);
+}
+
+.panel-card,
+.chart-card,
+[data-testid="stMetric"] {
+  border: none !important;
+}
+
+[data-testid="stDataFrame"] {
+  border: none !important;
+}
+
+.icon-card {
+  border: none !important;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.22);
+}
