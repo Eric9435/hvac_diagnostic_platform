@@ -109,3 +109,30 @@ def fetch_all_analyses() -> list[dict]:
     conn.close()
     return [dict(row) for row in rows]
 
+
+def fetch_analysis_by_id(analysis_id: int) -> dict | None:
+    conn = get_connection()
+    row = conn.execute(
+        "SELECT * FROM analyses WHERE id = ?",
+        (analysis_id,),
+    ).fetchone()
+    conn.close()
+
+    if row is None:
+        return None
+
+    record = dict(row)
+
+    for key in ["detected_problems", "likely_causes", "recommendations"]:
+        value = record.get(key)
+        if value:
+            try:
+                record[key] = json.loads(value)
+            except json.JSONDecodeError:
+                record[key] = []
+        else:
+            record[key] = []
+
+    return record
+
+

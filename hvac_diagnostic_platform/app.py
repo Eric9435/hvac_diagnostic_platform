@@ -11,6 +11,7 @@ from ui.pages.compare import render_compare_page
 from ui.pages.reports import render_reports_page
 from ui.pages.settings import render_settings_page
 from ui.pages.admin import render_admin_page
+from core.services.export_service import td
 
 
 st.set_page_config(page_title=APP_TITLE, layout="wide")
@@ -18,25 +19,50 @@ st.set_page_config(page_title=APP_TITLE, layout="wide")
 SCHEMA_PATH = Path(__file__).resolve().parent / "database" / "schema.sql"
 initialize_database(SCHEMA_PATH)
 
-st.sidebar.title("HVAC Diagnostic Platform")
-page = st.sidebar.radio(
-    "Navigation",
-    ["Home", "New Analysis", "Results Dashboard", "History", "Compare", "Reports", "Settings", "Admin"],
+if "lang" not in st.session_state:
+    st.session_state["lang"] = "dual"
+
+lang = st.sidebar.selectbox(
+    td("language", "dual"),
+    options=["en", "my", "dual"],
+    format_func=lambda x: {
+        "en": "English",
+        "my": "မြန်မာ",
+        "dual": "English / မြန်မာ",
+    }[x],
 )
 
-if page == "Home":
+st.session_state["lang"] = lang
+
+st.sidebar.title(td("app_title", lang))
+page = st.sidebar.radio(
+    "Navigation",
+    [
+        td("home", lang),
+        td("new_analysis", lang),
+        td("results_dashboard", lang),
+        td("history", lang),
+        td("compare", lang),
+        td("reports", lang),
+        td("settings", lang),
+        td("admin", lang),
+    ],
+)
+
+if page == td("home", lang):
     render_home_page()
-elif page == "New Analysis":
+elif page == td("new_analysis", lang):
     render_new_analysis_page()
-elif page == "Results Dashboard":
+elif page == td("results_dashboard", lang):
     render_results_dashboard_page()
-elif page == "History":
+elif page == td("history", lang):
     render_history_page()
-elif page == "Compare":
+elif page == td("compare", lang):
     render_compare_page()
-elif page == "Reports":
+elif page == td("reports", lang):
     render_reports_page()
-elif page == "Settings":
+elif page == td("settings", lang):
     render_settings_page()
-elif page == "Admin":
+elif page == td("admin", lang):
     render_admin_page()
+
