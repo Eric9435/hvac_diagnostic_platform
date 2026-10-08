@@ -1,14 +1,17 @@
-# HVAC Diagnostic Platform
+# HVAC Diagnostic Platform — Application
 
-A modern Streamlit-based HVAC diagnostic application for:
-- Basic and Advanced analysis
-- Energy loss estimation
-- Wasted kWh and cost calculation
-- Diagnosis and recommendations
-- SQLite data save with timestamp
-- History dashboard
+Streamlit HVAC calculations, rule-based diagnostics, local analysis history, comparisons, and reports.
 
-## Run
+## Run from this directory
+
+Use Python 3 and a virtual environment.
 
 ```bash
-streamlit run app.py
+python -m pip install -r requirements.txt
+python -m streamlit run app.py
+python -m pytest
+```
+
+Run from this directory inside an activated Python virtual environment. Review tariffs, design assumptions, and thresholds in `config.py`. Confidence scores are heuristic.
+
+For full project features, architecture, configuration, and limitations, see the [repository README](../README.md).
